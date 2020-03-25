@@ -14,7 +14,7 @@ public class Monitor{
     //private ArrayList<Integer> disparos;
     private int[] vSensibilizadas;
     private int[] vColas;
-    private int[] vResultante;
+    private int[] m;
     private boolean k;
 
     public Monitor(RedDePetri red, Politicas politicas,Condicion condicion){
@@ -47,23 +47,22 @@ public class Monitor{
                     vColas = VariablesDeCondicion.quienesEstan();
                     for (int i=0; i < vSensibilizadas.length(); i++){
                         if(vSensibilizadas[i] == 1 && vColas[i] == 1){
-                            vResultante[i] = 1;
+                            m[i] = 1;
                             cont++;
                             auxIndice = i;
                         } 
-                        else vResultante[i] = 0;
+                        else m[i] = 0;
                     }
                     if(cont == 0) k = false;
 
-                    if(cont == 1){
-                        VariablesDeCondicion[transicion].Resume();
-                        k = false;
-                    }
+                    if(cont == 1) VariablesDeCondicion[transicion].Resume();
+                
                     if(cont > 1){
-                        seleccionado = Politica.cual(vResultante);
+                        seleccionado = Politica.cual(m);
                         VariablesDeCondicion[transicion].Resume();
-                        k = false;
                     }
+                    
+                    cont = 0;
                 }
                 else{
                     mutex.release();
