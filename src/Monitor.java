@@ -12,7 +12,7 @@ public class Monitor{
     //private final int CANT_TAREAS = 1000;
     //private String disparosRealizados;
     //private ArrayList<Integer> disparos;
-    private int[] vSensibilizadas;
+    private ArrayList<Integer> vSensibilizadas;
     private int[] vColas;
     private int[] m;
     private boolean k;
@@ -43,10 +43,10 @@ public class Monitor{
                 k = RdP.disparar(transicion);
 
                 if(k){
-                    vSensibilizadas = RdP.sensibilizadas();
+                    vSensibilizadas = RdP.getSensibilizadas();
                     vColas = VariablesDeCondicion.quienesEstan();
-                    for (int i=0; i < vSensibilizadas.length(); i++){
-                        if(vSensibilizadas[i] == 1 && vColas[i] == 1){
+                    for (int i=0; i < vSensibilizadas.size(); i++){
+                        if(vSensibilizadas.get(i) == 1 && vColas[i] == 1){
                             m[i] = 1;
                             cont++;
                             auxIndice = i;
