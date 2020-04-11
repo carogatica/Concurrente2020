@@ -10,7 +10,7 @@ public class Archivo {
 
         try
         {
-            archivo=new FileWriter("C:\\Users\\alejandro\\Desktop\\log.txt");
+            archivo=new FileWriter("d:\\Finalconcurrente\\log.txt");
 
             escritor=new PrintWriter(archivo);
 
