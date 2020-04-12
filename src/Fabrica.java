@@ -18,9 +18,17 @@ public class Fabrica {
     int secuencia6[] = {13, 12};
     int secuencia7[] = {6};
     int secuencia8[] = {10};
+/*     ArrayList<Integer> t2 = new ArrayList<>();
+    ArrayList<Integer> t3 = new ArrayList<>();
+    t2.add(1);
+    t2.add(6);
+    t3.add(10);
+    t3.add(8); */
     
     Tarea origen1 = new Tarea(monitor, secuencia1);
     Tarea origen2 = new Tarea(monitor, secuencia2);
+//    Tarea cpu1 = new Tarea(monitor, secuencia3, t2);
+//    Tarea cpu2 = new Tarea(monitor, secuencia4, t3);
     Tarea cpu1 = new Tarea(monitor, secuencia3);
     Tarea cpu2 = new Tarea(monitor, secuencia4);
     Tarea cpu11 = new Tarea(monitor, secuencia7);

@@ -15,7 +15,7 @@ public class RedDePetri{
     private int[] B;
     private int[] Q;
 
-    private Operaciones op;
+    private OperadorConMatrices op;
     private Archivo archivo;
 
     private int[][] PInvariantes = {{0,3,1},  //cada fila es{p0,p1,...,pk,r} tal que -> m(p0)+m(p1)+...+m(pk) = r
@@ -29,11 +29,21 @@ public class RedDePetri{
         this.marcaActual = marcaInicial;
         this.Imenos = Imenos;
         this.Imas = Imas;
-        this.op = new Operaciones();
+        this.op = new OperadorConMatrices();
         this.H = op.traspuesta(H); //ya la guarda como traspuesta para agilizar los calculos
         this.archivo = archivo;
         crearExtendida();
     }
+    
+    public int getCantidadTransiciones()
+    { 
+    	return Imenos[0].length;
+    } // cant transiciones == cant columnas
+    
+    public int getCantidadPlaza()
+    { 
+    	return Imenos.length;
+    } // cant transiciones == cant columnas
 
     private void crearExtendida() { //crea  Q, Z, E, B y el Ex, todos los vectores para ver si esta sensibilizada
         this.Q = op.and(marcaActual,marcaActual); // vector de marcas binario
