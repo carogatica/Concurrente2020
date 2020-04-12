@@ -51,4 +51,6 @@ public class Fabrica {
     h4.start();
     h5.start();
     h6.start();
+    h7.start();
+    h8.start();
 }
