@@ -15,7 +15,7 @@ public class RedDePetri{
     private int[] B;
     private int[] Q;
 
-    private OperadorConMatrices op;
+    private Operaciones op;
     private Archivo archivo;
 
     private int[][] PInvariantes = {{0,3,1},  //cada fila es{p0,p1,...,pk,r} tal que -> m(p0)+m(p1)+...+m(pk) = r
@@ -29,7 +29,7 @@ public class RedDePetri{
         this.marcaActual = marcaInicial;
         this.Imenos = Imenos;
         this.Imas = Imas;
-        this.op = new OperadorConMatrices();
+        this.op = new Operaciones();
         this.H = op.traspuesta(H); //ya la guarda como traspuesta para agilizar los calculos
         this.archivo = archivo;
         crearExtendida();
