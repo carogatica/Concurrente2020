@@ -72,7 +72,5 @@ public class Fabrica {
 		
 	}
 	
-	
-	
 
 }//CLASE

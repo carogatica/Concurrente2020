@@ -30,7 +30,7 @@ public class Archivo {
         }
     }
 
-    public static int[][] leerMatriz(String pathname) {
+    public int[][] leerMatriz(String pathname) {
         File archivo = null;
         FileReader fr = null;
         BufferedReader br = null;

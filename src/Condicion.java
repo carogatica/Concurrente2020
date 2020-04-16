@@ -8,14 +8,7 @@ public class Condicion {
     public void setCondicion(boolean condicion) {
         this.condicion = condicion;
         if(condicion){
-           h1.finalizar();
-           h2.finalizar();
-           h3.finalizar();
-           h4.finalizar();
-           h5.finalizar();
-           h6.finalizar();
-           h7.finalizar();
-           h8.finalizar();
+           Tarea.finalizar();
         }
     }
     public boolean getCondicion(){

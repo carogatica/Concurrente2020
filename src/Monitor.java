@@ -58,7 +58,7 @@ public class Monitor<Politicas>{
                     if(cont == 1) VariablesDeCondicion[transicion].Resume();
                 
                     if(cont > 1){
-                        seleccionado = Politica.cual(m);
+                        seleccionado = politica.cual(m);
                         VariablesDeCondicion[transicion].Resume();
                     }
                     
@@ -72,6 +72,9 @@ public class Monitor<Politicas>{
             mutex.release();        //devuelve mutex
         }
     }
-
-    
+    private void GenerarVarCond(){ //crea tantas variables de condicion como cantidad de transiciones tiene la red de petri
+        for(int i = 0; i < this.VariablesDeCondicion.length; i++){
+            this.VariablesDeCondicion[i] = new Cola(this.mutex);
+        }
+    }
 }
