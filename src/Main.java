@@ -4,8 +4,8 @@ import java.util.HashMap;
 
 public class Main {
 
-    private static String path_matrices = "/media/adelina/7F81F6B873B8E620/CRRT_2020/TP3---Concurrente-master/TP3-entregado-25-06/Txt_Rdp";
-    private static String path_Imas = path_matrices+"//Matriz_I+.txt";
+    private static String path_matrices = "/home/caro/Documents/Concurrente/Concurrente2020/matrices";
+    private static String path_Imas = path_matrices+"/Matriz_I+.txt";
     private static String path_Imenos = path_matrices+"/Matriz_I-.txt";
     private static String path_H = path_matrices+"/Matriz_H.txt";
     private static String path_marca = path_matrices+"/Marca_Inicial.txt";
