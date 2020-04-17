@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
 public class Monitor{
+    //nada
     private Semaphore mutex=new Semaphore(1);  //semaforo binario de exclusion mutua
     private Cola[] VariablesDeCondicion;  //condiciones de sincronizacion de cada transicion
     private RedDePetri RdP;     //red que controla la logica del sistema
