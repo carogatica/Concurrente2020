@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
-public class Monitor<Politicas>{
+public class Monitor{
     private Semaphore mutex=new Semaphore(1);  //semaforo binario de exclusion mutua
     private Cola[] VariablesDeCondicion;  //condiciones de sincronizacion de cada transicion
     private RedDePetri RdP;     //red que controla la logica del sistema
@@ -44,7 +44,7 @@ public class Monitor<Politicas>{
 
                 if(k){
                     vSensibilizadas = RdP.getSensibilizadas();
-                    vColas = VariablesDeCondicion.quienesEstan();
+                    vColas = quienesEstan();
                     for (int i=0; i < vSensibilizadas.size(); i++){
                         if(vSensibilizadas.get(i) == 1 && vColas[i] == 1){
                             m[i] = 1;
@@ -74,7 +74,15 @@ public class Monitor<Politicas>{
     }
     private void GenerarVarCond(){ //crea tantas variables de condicion como cantidad de transiciones tiene la red de petri
         for(int i = 0; i < this.VariablesDeCondicion.length; i++){
-            this.VariablesDeCondicion[i] = new Cola(this.mutex);
+            this.VariablesDeCondicion[i] = new Cola();
         }
+    }
+    
+    private int[]  quienesEstan(){ 
+        for(int i = 0; i < this.VariablesDeCondicion.length; i++){ 
+            if( VariablesDeCondicion[i].Empty() )  vColas[i] = 0; 	
+            else vColas[i] = 1;
+        }
+        return vColas;
     }
 }

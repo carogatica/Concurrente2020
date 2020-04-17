@@ -150,8 +150,8 @@ public class RedDePetri{
     }
 
 
-    public void disparar(int transicion) throws IllegalDisparoException {  //dispara una transicion modificando la marcaActual con la ec. generalizada
-
+    public boolean disparar(int transicion) throws IllegalDisparoException {  //dispara una transicion modificando la marcaActual con la ec. generalizada
+        boolean k;
         if(esSensibilizada(transicion)){      //verifica si la transicion esta sensibilizada a partir de Ext
             int[] disparoSensibilizado = generarVectorDisparo(transicion); //sigma
          //   imprimir(disparoSensibilizado, "Sigma");
@@ -173,10 +173,12 @@ public class RedDePetri{
                     e.printStackTrace();
                 }
             }
-
+        k = true;
         }else{
-            throw new IllegalDisparoException();
+            k = false;
+            //throw new IllegalDisparoException();
         }
+        return k;
     }
 
     public void imprimir(int[][] a, String name){
