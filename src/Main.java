@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 public class Main {
 
+	
     private static String path_matrices = "/home/caro/Documents/Concurrente/Concurrente2020/matrices";
     private static String path_Imas = path_matrices+"/Matriz_I+.txt";
     private static String path_Imenos = path_matrices+"/Matriz_I-.txt";
