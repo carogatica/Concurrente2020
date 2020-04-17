@@ -5,6 +5,7 @@ public class Condicion {
         this.condicion = condicion;
     }
 
+    
     public void setCondicion(boolean condicion) {
         this.condicion = condicion;
         if(condicion){
