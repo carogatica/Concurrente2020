@@ -16,6 +16,8 @@ public class Monitor{
     //private ArrayList<Integer> vSensibilizadas;
     private int[] vSensibilizadas;
 
+    
+
     private int[] vColas;
     private int[] m;
     private boolean k;
@@ -31,8 +33,8 @@ public class Monitor{
     }
 
     public void disparar(int transicion) throws IllegalDisparoException {
-        { //dispara una transicion   
-            int cont = 0;
+
+    		int cont = 0;
             int seleccionado;
             int auxIndice;
             try {
@@ -47,6 +49,9 @@ public class Monitor{
 
                 if(k){
                     vSensibilizadas = RdP.getSensibilizadas();
+                    vColas = new int[RdP.getCantTransiciones()]; 
+                    m = new int[RdP.getCantTransiciones()]; 
+
                     vColas = quienesEstan();
                     for (int i=0; i < vSensibilizadas.length; i++){
                         if(vSensibilizadas[i] == 1 && vColas[i] == 1){
@@ -54,7 +59,8 @@ public class Monitor{
                             cont++;
                             auxIndice = i;
                         } 
-                        else m[i] = 0;
+                        else
+                        	{m[i] = 0;}
                     }
                     if(cont == 0) k = false;
 
@@ -73,8 +79,9 @@ public class Monitor{
                 }
             }
             mutex.release();        //devuelve mutex
-        }
+        
     }
+    
     private void GenerarVarCond(){ //crea tantas variables de condicion como cantidad de transiciones tiene la red de petri
         for(int i = 0; i < this.VariablesDeCondicion.length; i++){
             this.VariablesDeCondicion[i] = new Cola();
@@ -82,7 +89,7 @@ public class Monitor{
     }
     
     private int[]  quienesEstan(){ 
-        for(int i = 0; i < vColas.length; i++){ 
+        for(int i = 0; i < VariablesDeCondicion.length; i++){ 
             if( this.VariablesDeCondicion[i].Empty() )
             	{vColas[i] = 0; 	}
             else 
