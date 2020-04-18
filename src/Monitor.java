@@ -13,7 +13,9 @@ public class Monitor{
     //private final int CANT_TAREAS = 1000;
     //private String disparosRealizados;
     //private ArrayList<Integer> disparos;
-    private ArrayList<Integer> vSensibilizadas;
+    //private ArrayList<Integer> vSensibilizadas;
+    private int[] vSensibilizadas;
+
     private int[] vColas;
     private int[] m;
     private boolean k;
@@ -46,8 +48,8 @@ public class Monitor{
                 if(k){
                     vSensibilizadas = RdP.getSensibilizadas();
                     vColas = quienesEstan();
-                    for (int i=0; i < vSensibilizadas.size(); i++){
-                        if(vSensibilizadas.get(i) == 1 && vColas[i] == 1){
+                    for (int i=0; i < vSensibilizadas.length; i++){
+                        if(vSensibilizadas[i] == 1 && vColas[i] == 1){
                             m[i] = 1;
                             cont++;
                             auxIndice = i;
@@ -80,9 +82,12 @@ public class Monitor{
     }
     
     private int[]  quienesEstan(){ 
-        for(int i = 0; i < this.VariablesDeCondicion.length; i++){ 
-            if( VariablesDeCondicion[i].Empty() )  vColas[i] = 0; 	
-            else vColas[i] = 1;
+        for(int i = 0; i < vColas.length; i++){ 
+            if( this.VariablesDeCondicion[i].Empty() )
+            	{vColas[i] = 0; 	}
+            else 
+            	{vColas[i] = 1;}
+            
         }
         return vColas;
     }
