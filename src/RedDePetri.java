@@ -110,13 +110,21 @@ public class RedDePetri{
         return marcaActual;
     }
 
-    public int[] getSensibilizadas(){      //devuelve una lista de todas las transiciones sensibilizadas(comunes y temporales)
+    /*public int[] getSensibilizadas(){      //devuelve una lista de todas las transiciones sensibilizadas(comunes y temporales)
 
     	sensibilizadas = new int[E.length];
     	
         for(int i = 0; i < E.length; i++) {
             if(esSensibilizada(i)) sensibilizadas[i] =1;
             else sensibilizadas[i] =0;
+        }
+        return sensibilizadas;
+    }*/
+
+    public ArrayList<Integer> getSensibilizadas(){      //devuelve una lista de todas las transiciones sensibilizadas(comunes y temporales)
+        ArrayList<Integer> sensibilizadas = new ArrayList<>();
+        for(int i = 0; i < E.length; i++) {
+            if(esSensibilizada(i)) sensibilizadas.add(i);
         }
         return sensibilizadas;
     }

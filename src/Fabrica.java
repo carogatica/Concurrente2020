@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Fabrica {
 	
 	private Monitor monitor ;
-	private Thread h1, h2, h3,h4, h5, h6, h7, h8; 
+	private Thread h1, h2, h3,h4, h5, h6, h7, h8, h9; 
 	//private Thread h1;
 
 	
@@ -12,14 +12,15 @@ public class Fabrica {
 		
 		 	this.monitor = monitor;
 		 
-		 	int secuencia1[] = {0, 4};
-		    int secuencia2[] = {0, 14};
+		 	int secuencia1[] = {0};
+		    int secuencia2[] = {4};
 		    int secuencia3[] = {7, 2, 1};
 		    int secuencia4[] = {11, 9, 8};
 		    int secuencia5[] = {5, 3};
 		    int secuencia6[] = {13, 12};
 		    int secuencia7[] = {6};
-		    int secuencia8[] = {10};
+			int secuencia8[] = {10};
+			int secuencia9[] = {14};
 		/*     ArrayList<Integer> t2 = new ArrayList<>();
 		    ArrayList<Integer> t3 = new ArrayList<>();
 		    t2.add(1);
@@ -28,7 +29,8 @@ public class Fabrica {
 		    t3.add(8); */
 		    
 		    Tarea origen1 = new Tarea(monitor, secuencia1);
-		    Tarea origen2 = new Tarea(monitor, secuencia2);
+			Tarea origen2 = new Tarea(monitor, secuencia2);
+			Tarea origen22 = new Tarea(monitor, secuencia9);
 		//    Tarea cpu1 = new Tarea(monitor, secuencia3, t2);
 		//    Tarea cpu2 = new Tarea(monitor, secuencia4, t3);
 		    Tarea cpu1 = new Tarea(monitor, secuencia3);
@@ -39,7 +41,8 @@ public class Fabrica {
 		    Tarea nucleo2 = new Tarea(monitor, secuencia6);
 		
 		    h1 = new Thread(origen1);
-		    h2 = new Thread(origen2);
+			h2 = new Thread(origen2);
+			h9 = new Thread(origen22);
 		    h3 = new Thread(cpu1);
 		    h4 = new Thread(cpu2);
 		    h5 = new Thread(nucleo1);
@@ -48,7 +51,8 @@ public class Fabrica {
 		    h8 = new Thread(cpu22);
 		
 		    h1.start();
-		    h2.start();
+			h2.start();
+			h9.start();
 		    h3.start();
 		    h4.start();
 		    h5.start();
@@ -68,6 +72,7 @@ public class Fabrica {
 		 h6.interrupt();
 		 h7.interrupt();
 		 h8.interrupt();
+		 h9.interrupt();
 		 
 		
 	}
