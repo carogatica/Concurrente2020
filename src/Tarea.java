@@ -13,7 +13,9 @@ public class Tarea implements Runnable{
 
     @Override
 	public void run() {
-		while(!finalizar){
+    	
+    	while(true){
+    		
             try{
                 for(int i=0; i<disparos.length; i++){
                     monitor.disparar(disparos[i]);
@@ -22,8 +24,13 @@ public class Tarea implements Runnable{
                 System.out.println("ocurrio: "+ e.getMessage());
                 e.printStackTrace();
             }
+            
         }
+		
+      //  System.out.println( "------FIN HILO: " + Thread.currentThread().getName() );
+
     }
+    
     public static void finalizar(){
         finalizar=true;
 	}

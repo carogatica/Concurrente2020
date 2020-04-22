@@ -2,6 +2,7 @@ public class Operaciones {
 
     public Operaciones() {
     }
+    
 
     public int[][] and(int[][] a, int[][] b) {
         if (a == null || b == null) throw new NullPointerException("matriz nula!");

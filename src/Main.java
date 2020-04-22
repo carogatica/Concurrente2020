@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Main {
 
 	
-    private static String path_matrices = "/home/caro/Documents/Concurrente/Concurrente2020/matrices";
+    private static String path_matrices = "/home/adelina/git/Concurrente2020/matrices";
     private static String path_Imas = path_matrices+"/Matriz_I+.txt";
     private static String path_Imenos = path_matrices+"/Matriz_I-.txt";
     private static String path_H = path_matrices+"/Matriz_H.txt";
@@ -88,11 +88,15 @@ public class Main {
         Fabrica fabrica_hilos = new Fabrica(monitor);
 
         while (condicionDeFinalizacion.getCondicion() ==false){
-                System.out.println("esperando");
+              //  System.out.println("esperando");
                 Thread.sleep(1000);
         }
+        
+        
               
         fabrica_hilos.Interrumpir();
+        System.out.println( "------FIN HILO: fabrica_hilos.Interrumpir()  " );
+
 
         Thread.sleep(1000);
         

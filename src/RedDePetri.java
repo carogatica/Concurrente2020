@@ -15,7 +15,8 @@ public class RedDePetri{
     private int[] B;
     private int[] Q;
     private int[] sensibilizadas;
-
+    //15 T
+    //16 P
 
     private Operaciones op;
     private Archivo archivo;
