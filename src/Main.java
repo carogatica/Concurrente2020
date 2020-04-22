@@ -81,6 +81,7 @@ public class Main {
         int posicionPlazaBuffer1 = 1;
         int posicionPlazaBuffer2 = 15;
         
+        
         RedDePetri rdp = new RedDePetri(marcaInicial, Imenos, Imas,matrizInhibicionH, archivo);
         Politicas politica = new Politicas(rdp ,posicionTransicionBuffer1, posicionTransicionBuffer2, posicionPlazaBuffer1, posicionPlazaBuffer2);
         
