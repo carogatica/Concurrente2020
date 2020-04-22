@@ -12,13 +12,13 @@ public class Monitor{
     private Condicion condicionDeFinalizacion;
     //private int finalN2;
     //private int finalN1;
-    private final int CANT_TAREAS = 1000;
+    private final int CANT_TAREAS = 30;
     private int disparosRealizados;
 
     // "static" --> unico de la clase
     // "final" --> que no se puede modificar? se vuelve una constante? una vez instanciada, se vuelve cte
     // que indica que a esa variable solo se le puede asignar un valor u objeto una única vez.
-    //private ArrayList<Integer> disparos;
+    private ArrayList<Integer> disparos;
     //private ArrayList<Integer> vSensibilizadas;
     private int[] vSensibilizadas;
 
@@ -35,6 +35,7 @@ public class Monitor{
         GenerarVarCond();
         this.condicionDeFinalizacion = condicion;
         this.disparosRealizados = 0;
+        this.disparos = new ArrayList<Integer>();
         //this.finalN1 = 0;
         //this.finalN2 = 0;
     }
@@ -44,7 +45,6 @@ public class Monitor{
 
         debug_imp_acciones(transicion);
     	
-    	    evaluar_condicion();
     	
     		int cont = 0;
             int seleccionado = 0;
@@ -58,7 +58,7 @@ public class Monitor{
 
             while(k == true){
             	
-            	
+            	disparos.add(transicion);
 
                 k = RdP.disparar(transicion);
 
@@ -75,8 +75,8 @@ public class Monitor{
                     vColas = quienesEstan();
                     
                     
-                   // debug_imprimir_vector( vSensibilizadas, "vSensibilizadas");
-                   // debug_imprimir_vector( vColas,          "vColas         ");
+               debug_imprimir_vector( vSensibilizadas, "vSensibilizadas");
+               debug_imprimir_vector( vColas,          "vColas         ");
 
                 	
                 	
@@ -90,7 +90,7 @@ public class Monitor{
                         	{m[i] = 0;}
                     }
                     
-                //    debug_imprimir_vector( m,               "m              ");
+                debug_imprimir_vector( m,               "m              ");
 
                     if(cont == 0)
                     	{	     	System.out.println(" NADIE");	
@@ -107,6 +107,9 @@ public class Monitor{
                      	System.out.println("DESPERTO T:" + seleccionado);
 
                     	VariablesDeCondicion[seleccionado].Resume();
+                    	
+                	    evaluar_condicion();
+
                     	return;
                 	}
                 
@@ -116,6 +119,8 @@ public class Monitor{
                     	System.out.println("DESPERTO xPol T:" + seleccionado);
 
                         VariablesDeCondicion[seleccionado].Resume();
+                       
+
                         return;
 
                     }
@@ -123,14 +128,20 @@ public class Monitor{
                     cont = 0;
                 }
                 else{
+                	
+                	evaluar_condicion();
                     mutex.release();
                 	System.out.println("duerme T:" + transicion);
 
                     VariablesDeCondicion[transicion].Delay();
                 }
             }
+            
+            evaluar_condicion();
             mutex.release();        //devuelve mutex
         
+    	    
+
     }
     
     private void debug_imprimir_vector( int[] V, String leyenda)
@@ -183,13 +194,27 @@ public class Monitor{
     
     
     private void evaluar_condicion()
+    
     {
-    	   if(  CANT_TAREAS <= disparosRealizados)
-    	   {
-    		   condicionDeFinalizacion.setCondicion(true);
-    		   
+    	if( disparosRealizados == 100 || disparosRealizados == 200 || disparosRealizados == 300 || disparosRealizados == 400 || disparosRealizados == 600 )
+    		{
+    		System.out.println( " disparosRealizados ------>      " +  disparosRealizados);
+    		}
+
+    	
+    	 if(  CANT_TAREAS < disparosRealizados)
+    	   {    		 
+     		System.out.println( " disparosRealizados ------>      " +  disparosRealizados);
+   		   condicionDeFinalizacion.setCondicion(true);    		  
     	   }
     	
     }
+    
+    public ArrayList<Integer> getDisparos()
+    {
+    	return this.disparos;
+    	
+    }
+    
     
 }

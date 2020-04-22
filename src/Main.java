@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -57,6 +58,7 @@ public class Main {
         	 
      }
     
+     
     public static void main(String[] args) throws InterruptedException {
        
     	Calendar today = Calendar.getInstance();
@@ -89,7 +91,7 @@ public class Main {
 
         while (condicionDeFinalizacion.getCondicion() ==false){
               //  System.out.println("esperando");
-                Thread.sleep(1000);
+                Thread.sleep(1);
         }
         
         
@@ -97,8 +99,12 @@ public class Main {
         fabrica_hilos.Interrumpir();
         System.out.println( "------FIN HILO: fabrica_hilos.Interrumpir()  " );
 
-
+                
         Thread.sleep(1000);
+        
+         Invariantes Invariantes = new  Invariantes(  monitor.getDisparos() );
+         Invariantes.verificarTinvariantes();
+    	
         
         CalendarioFin(today,  milisegToday);
         
