@@ -5,16 +5,16 @@ public class Condicion {
         this.condicion = condicion;
     }
 
-   //nada
+    // nada
     public void setCondicion(boolean condicion) {
         this.condicion = condicion;
-        if(condicion){
-           Tarea.finalizar();
+        if (condicion) {
+            Tarea.finalizar();
         }
     }
-    public boolean getCondicion(){
+
+    public boolean getCondicion() {
         return condicion;
     }
 
 }
-

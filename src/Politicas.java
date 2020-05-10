@@ -95,6 +95,21 @@ public class Politicas {
     	return decision;
     	
     }//cual
+
+
+    public int cual( ArrayList<Integer> m) //devuelve la transicion de mayor prioridad entre las sensibilizadas
+    {
+
+        int eleccion = m.get(0);
+        for (int transicion : m) {
+            if (prioridades.get(transicion) > prioridades.get(eleccion)) {
+                eleccion = transicion;
+            }
+        }
+
+            return eleccion;            //sino se retorna la otra transicion elegida
+    	
+    }//cual
     
     
 }//class

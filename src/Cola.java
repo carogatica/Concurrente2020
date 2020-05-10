@@ -19,6 +19,11 @@ public class Cola {
         } catch (InterruptedException e) {
             System.out.println("interrumpen Delay1 de " + Thread.currentThread().getName());
         }
+        try {
+            mutex.acquire();
+        } catch (InterruptedException e) {
+            System.out.println("interrumpen Delay2");
+        }
     }
 
     public void Resume(){       //desbloquea un hilo, si no hay bloqueados no hace nada
