@@ -13,16 +13,10 @@ public class Cola {
 
     public void Delay(){    //bloquea a un hilo y devuelve el mutex
         bloqueados++;
-        mutex.release();
         try {
             condicion.acquire();
         } catch (InterruptedException e) {
             System.out.println("interrumpen Delay1 de " + Thread.currentThread().getName());
-        }
-        try {
-            mutex.acquire();
-        } catch (InterruptedException e) {
-            System.out.println("interrumpen Delay2");
         }
     }
 

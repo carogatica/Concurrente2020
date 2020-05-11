@@ -11,6 +11,7 @@ public class Monitor {
     private int finalN2;
     private int finalN1;
     private final int CANT_TAREAS = 1000;
+    private int cantidad = 0;
     // private String disparosRealizados;
     // private ArrayList<Integer> disparos;
     // private ArrayList<Integer> vSensibilizadas;
@@ -32,25 +33,23 @@ public class Monitor {
     }
 
     public void disparar(int transicion) throws IllegalDisparoException {
-
+        
         int cont = 0;
-        int seleccionado;
-        int auxIndice;
+        int seleccionado = 0;
+        int auxIndice = 0;
         try {
             mutex.acquire();
             k = true;
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        k = RdP.esSensibilizada(transicion) && RdP.disparar(transicion);;
+        //k = RdP.esSensibilizada(transicion) && RdP.disparar(transicion);;
         while (k) {
             //k = RdP.disparar(transicion);
-            //k = RdP.esSensibilizada(transicion) && RdP.disparar(transicion);;
+            k = RdP.esSensibilizada(transicion) && RdP.disparar(transicion);;
             System.out.println("Transicion: " + transicion);
             if (k) {
-                /*while(!(RdP.esSensibilizada(transicion))){
-                    VariablesDeCondicion[transicion].Delay(); 
-                }*/
+
                 vSensibilizadas = RdP.getSensibilizadas();
                 vColas = new int[RdP.getCantTransiciones()];
                 m = new int[RdP.getCantTransiciones()];
@@ -65,10 +64,8 @@ public class Monitor {
                         m[i] = 0;
                     }
                 }
-                if (cont == 0) {
-                    //VariablesDeCondicion[transicion].Delay();
+                if (cont == 0)
                     k = false;
-                }
 
                 if (cont == 1)
                     VariablesDeCondicion[transicion].Resume();
@@ -81,18 +78,8 @@ public class Monitor {
                 cont = 0;
                 System.out.println("Disparada: " + transicion);
             } 
-            while(!RdP.esSensibilizada(transicion)) {
-                
-                VariablesDeCondicion[transicion].Delay();
-                System.out.println("se traba aca");
-                // k = true;
-                //mutex.release();
-            }
-            //actualizarCondiciones(transicion);
-            //desbloquearHilo();
         }
         actualizarCondiciones(transicion);
-        desbloquearHilo();
         mutex.release(); // devuelve mutex
 
     }
@@ -133,28 +120,5 @@ public class Monitor {
             RdP.printArchivo(finalN2, "Tareas completadas en N2");
         }
 
-    }
-
-    private ArrayList<Integer> ColasAndSensibilizadas() { //devuelve una lista de las transiciones sensibilizadas
-        // que tienen hilos queriendo dispararlas
-        ArrayList<Integer> desbloqueables = new ArrayList<>();
-        for(int i = 0; i < this.VariablesDeCondicion.length; i++){
-            if( !(VariablesDeCondicion[i].Empty()) && RdP.esSensibilizada(i)){
-                desbloqueables.add(i);
-            }
-        }
-        return desbloqueables;
-    }
-
-
-    private void desbloquearHilo(){      //desbloquea un hilo de las colas de condicion cuya transicion esté sensibilizada
-        ArrayList<Integer> desbloqueables = ColasAndSensibilizadas();
-        if (desbloqueables.isEmpty()) System.out.println("no hay nada para desbloquear");
-        if(!desbloqueables.isEmpty()){
-            System.out.println(VariablesDeCondicion[politica.cual(desbloqueables)]);
-            VariablesDeCondicion[politica.cual(desbloqueables)].Resume();
-            k = true; 
-        } 
-        return;
     }
 }
