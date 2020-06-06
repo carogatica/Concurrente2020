@@ -104,7 +104,7 @@ public class Main {
 
         while (condicionDeFinalizacion.getCondicion() == false) {
             System.out.println("esperando");
-            Thread.sleep(1000 *100);
+            Thread.sleep(1000 *1);
         }
 
         fabrica_hilos.Interrumpir();
