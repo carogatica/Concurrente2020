@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class Main {
 
-    private static String path_matrices = "/home/adelina/git/Concurrente2020/matrices";
+    private static String path_matrices = "/home/caro/Documents/Concurrente/Concurrente2020/matrices";
     private static String path_Imas = path_matrices + "/Matriz_I+.txt";
     private static String path_Imenos = path_matrices + "/Matriz_I-.txt";
     private static String path_H = path_matrices + "/Matriz_H.txt";
@@ -104,7 +104,7 @@ public class Main {
 
         while (condicionDeFinalizacion.getCondicion() == false) {
             System.out.println("esperando");
-            Thread.sleep(1000 *100);
+            Thread.sleep(1000 *1);
         }
 
         fabrica_hilos.Interrumpir();
