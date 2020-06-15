@@ -78,9 +78,18 @@ public class Main {
         int posicionTransicionBuffer2 = 14;
         int posicionPlazaBuffer1 = 1;
         int posicionPlazaBuffer2 = 15;
+        HashMap<Integer, TransicionConTiempo> transicionesConTiempo = new HashMap<>();
+        TransicionConTiempo t1 = new TransicionConTiempo(0, 50);
+        TransicionConTiempo t3 = new TransicionConTiempo(3, 50);
+        TransicionConTiempo t12 = new TransicionConTiempo(12, 50);
+        transicionesConTiempo.put(t1.getID(),t1);
+        transicionesConTiempo.put(t3.getID(),t3);
+        transicionesConTiempo.put(t12.getID(),t12);
         
-        RedDePetri rdp = new RedDePetri(marcaInicial, Imenos, Imas,matrizInhibicionH, archivo);
-        Politicas politica = new Politicas(rdp ,posicionTransicionBuffer1, posicionTransicionBuffer2, posicionPlazaBuffer1, posicionPlazaBuffer2);
+        RedDePetri rdp = new RedDePetri(marcaInicial, Imenos, Imas,matrizInhibicionH, 
+                                        transicionesConTiempo,archivo);
+        Politicas politica = new Politicas(rdp ,posicionTransicionBuffer1, posicionTransicionBuffer2,
+                                            posicionPlazaBuffer1, posicionPlazaBuffer2);
         
         Condicion condicionDeFinalizacion = new Condicion(false);
         Monitor monitor = new Monitor(rdp, politica,condicionDeFinalizacion);

@@ -15,9 +15,10 @@ public class RedDePetri{
     private int[] B;
     private int[] Q;
     private int[] sensibilizadas;
-
+    private int[] temporizada;
 
     private Operaciones op;
+    private HashMap<Integer, TransicionConTiempo> tConTiempo;
     private Archivo archivo;
 
     private int[][] PInvariantes = {{0,3,1},  //cada fila es{p0,p1,...,pk,r} tal que -> m(p0)+m(p1)+...+m(pk) = r
@@ -26,13 +27,15 @@ public class RedDePetri{
                                     {2,7,8,1},
                                     {9,12,11,1}};
 
-    public RedDePetri(int[] marcaInicial, int[][] Imenos, int[][] Imas, int[][] H, Archivo archivo) {
+    public RedDePetri(int[] marcaInicial, int[][] Imenos, int[][] Imas, int[][] H,
+                    HashMap<Integer, TransicionConTiempo> tConTiempo, Archivo archivo) {
 
         this.marcaActual = marcaInicial;
         this.Imenos = Imenos;
         this.Imas = Imas;
         this.op = new Operaciones();
         this.H = op.traspuesta(H); //ya la guarda como traspuesta para agilizar los calculos
+        this.tConTiempo = tConTiempo;
         this.archivo = archivo;
         crearExtendida();
     }
@@ -51,6 +54,7 @@ public class RedDePetri{
         this.Q = op.and(marcaActual,marcaActual); // vector de marcas binario
         crearE();
         crearB();
+        crearTemporizada();
         actualizarExt();
     }
 
@@ -184,6 +188,31 @@ public class RedDePetri{
             //throw new IllegalDisparoException();
         }
         return k;
+    }
+
+    private void crearTemporizada() {
+        this.temporizada = new int[Imenos[0].length]; //crea vector que tiene 1 si la transicion es temporizada y cero sino
+        for(int i = 0; i < temporizada.length; i++){
+            if(tConTiempo.containsKey(i)) temporizada[i] = 1;
+            else temporizada[i] = 0;
+        }
+        actualizarTemporizadas();
+    }
+
+    private void actualizarTemporizadas() { //Si antes no estaba sensibilizada y luego si, se setea que esta sensibilizada
+        for(Integer i : tConTiempo.keySet()){
+            if(Eaux[i] == 0 && E[i] == 1){ //se sensibilizo
+                tConTiempo.get(i).setInicioSensibilizado();
+            }
+        }
+    }
+
+    public boolean esTemporizada(int transicion){
+        return (temporizada[transicion] == 1);
+    }
+
+    public TransicionConTiempo getConTiempo(int transicion){
+        return tConTiempo.get(transicion);
     }
 
     public void imprimir(int[][] a, String name){

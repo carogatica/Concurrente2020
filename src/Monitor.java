@@ -7,17 +7,14 @@ public class Monitor{
     private Cola[] VariablesDeCondicion;  //condiciones de sincronizacion de cada transicion
     private RedDePetri RdP;     //red que controla la logica del sistema
     private Politicas politica; //politicas que resuelven los conflictos de la red
-    //private Condicion condicionDeFinalizacion;
-    //private int finalN2;
-    //private int finalN1;
-    //private final int CANT_TAREAS = 1000;
+    private Condicion condicionDeFinalizacion;
+    private int finalN2;
+    private int finalN1;
+    private final int CANT_TAREAS = 1000;
     //private String disparosRealizados;
     //private ArrayList<Integer> disparos;
     //private ArrayList<Integer> vSensibilizadas;
     private int[] vSensibilizadas;
-
-    
-
     private int[] vColas;
     private int[] m;
     private boolean k;
@@ -27,9 +24,9 @@ public class Monitor{
         this.VariablesDeCondicion = new Cola[RdP.getCantTransiciones()];  //se generan tantas variables de condicion como transiciones haya en la RdP
         this.politica = politicas;
         GenerarVarCond();
-        //this.condicionDeFinalizacion = condicion;
-        //this.finalN1 = 0;
-        //this.finalN2 = 0;
+        this.condicionDeFinalizacion = condicion;
+        this.finalN1 = 0;
+        this.finalN2 = 0;
     }
 
     public void disparar(int transicion) throws IllegalDisparoException {
@@ -45,37 +42,43 @@ public class Monitor{
             }
 
             while(k == true){
-                k = RdP.disparar(transicion);
-
-                if(k){
-                    vSensibilizadas = RdP.getSensibilizadas();
-                    vColas = new int[RdP.getCantTransiciones()]; 
-                    m = new int[RdP.getCantTransiciones()]; 
-
-                    vColas = quienesEstan();
-                    for (int i=0; i < vSensibilizadas.length; i++){
-                        if(vSensibilizadas[i] == 1 && vColas[i] == 1){
-                            m[i] = 1;
-                            cont++;
-                            auxIndice = i;
-                        } 
-                        else
-                        	{m[i] = 0;}
-                    }
-                    if(cont == 0) k = false;
-
-                    if(cont == 1) VariablesDeCondicion[transicion].Resume();
-                
-                    if(cont > 1){
-                        seleccionado = politica.cual(m);
-                        VariablesDeCondicion[transicion].Resume();
-                    }
-                    
-                    cont = 0;
+                if(RdP.esTemporizada(transicion)){
+                    dispararTemporizada(transicion);
                 }
-                else{
-                    mutex.release();
-                    VariablesDeCondicion[transicion].Delay();
+                else
+                {
+                    k = RdP.disparar(transicion);
+
+                    if(k){
+                        vSensibilizadas = RdP.getSensibilizadas();
+                        vColas = new int[RdP.getCantTransiciones()]; 
+                        m = new int[RdP.getCantTransiciones()]; 
+
+                        vColas = quienesEstan();
+                        for (int i=0; i < vSensibilizadas.length; i++){
+                            if(vSensibilizadas[i] == 1 && vColas[i] == 1){
+                                m[i] = 1;
+                                cont++;
+                                auxIndice = i;
+                            } 
+                            else
+                            	{m[i] = 0;}
+                        }
+                        if(cont == 0) k = false;
+
+                        if(cont == 1) VariablesDeCondicion[transicion].Resume();
+                    
+                        if(cont > 1){
+                            seleccionado = politica.cual(m);
+                            VariablesDeCondicion[transicion].Resume();
+                        }
+
+                        cont = 0;
+                    }
+                    else{
+                        mutex.release();
+                        VariablesDeCondicion[transicion].Delay();
+                    }
                 }
             }
             mutex.release();        //devuelve mutex
@@ -97,5 +100,50 @@ public class Monitor{
             
         }
         return vColas;
+    }
+
+private void dispararTemporizada(int transicion) throws IllegalDisparoException {
+    int cont = 0;
+    int auxIndice = 0;
+    int seleccionado = 0;
+    TransicionConTiempo t = RdP.getConTiempo(transicion);
+        if(t.estaAdentroDeVentana()){
+            RdP.disparar(transicion);
+        }
+        else if(t.estaAntes()){
+            mutex.release();
+            vColas = quienesEstan();
+            for (int i=0; i < vSensibilizadas.length; i++){
+                if(RdP.esTemporizada(vSensibilizadas[i]) && vSensibilizadas[i] == 1 && vColas[i] == 1)
+                {
+                    m[i] = 1;
+                    cont++;
+                    auxIndice = i;
+                } 
+                else
+                {
+                    m[i] = 0;
+                }
+            }
+            if(cont == 0) k = false;
+
+            if(cont == 1) VariablesDeCondicion[transicion].Resume();
+                    
+            if(cont > 1)
+            {
+                seleccionado = politica.cual(m);
+                VariablesDeCondicion[transicion].Resume();
+            }
+
+            cont = 0;
+            try {
+                Thread.sleep(t.cuantoDormir()); //duerme lo necesario para que al despertarse pueda disparar la temporizada
+                mutex.acquire();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            RdP.disparar(transicion); //llamada recursiva, en la mas interna deberia de entrar en el primer if y disparar la transicion
+        }
+        else throw new IllegalDisparoException("llego despues no se va a disparar nunca");
     }
 }
