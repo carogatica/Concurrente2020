@@ -1,5 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Archivo {
 
@@ -10,7 +12,9 @@ public class Archivo {
 
         try
         {
-            archivo=new FileWriter("d:\\Finalconcurrente\\log.txt");
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            archivo=new FileWriter(s + "/log.txt");
 
             escritor=new PrintWriter(archivo);
 
