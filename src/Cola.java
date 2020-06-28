@@ -2,16 +2,17 @@ import java.util.concurrent.Semaphore;
 
 public class Cola {
     Semaphore condicion;
+    Semaphore mutex;
     int bloqueados;
 
-    public Cola(){
+    public Cola(Semaphore mutex){
+        this.mutex=mutex;
         condicion = new Semaphore(0, true);
         bloqueados=0;
     }
 
     public void Delay(){    //bloquea a un hilo y devuelve el mutex
         bloqueados++;
-        //mutex.release();
         try {
             condicion.acquire();
         } catch (InterruptedException e) {

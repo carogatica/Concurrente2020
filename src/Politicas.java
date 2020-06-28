@@ -43,45 +43,36 @@ public class Politicas {
     	
     }
     
-    public int cual( int[] M) //devuelve la transicion de mayor prioridad entre las sensibilizadas
+    
+    public int cual( int[] M) 
+    //devuelve la transicion de mayor prioridad entre las sensibilizadas  ??
+    // seleccionar la transicion a disparar, por politica de bufer y x aleatorea
     {
-    	int eleccion [] = new int[RdP.getCantidadTransiciones()];
-    	int ceros [] = new int[RdP.getCantidadTransiciones()];
     	int decision = 0;
-    	
     	 Random randomno = new Random();
 
          // check next int value  
        //  System.out.println("Next int value: " + randomno.nextInt(10000));
-
-    	
-    	 for(int u = 0 ; u < eleccion.length; u++){
+    /*		int eleccion [] = new int[RdP.getCantidadTransiciones()];
+        	int ceros [] = new int[RdP.getCantidadTransiciones()];
+       for(int u = 0 ; u < eleccion.length; u++){
             eleccion[u] = 0;
             ceros[u] = 0;
          }//for
-    	 
+    	*/ 
     	 int numero_al;
     	 
-    	 while ( eleccion == ceros)
+    	 while (true)
     	 {
     		 numero_al = randomno.nextInt( RdP.getCantidadTransiciones() );    		 
     			
-        	 for(int u = 0 ; u < eleccion.length; u++){
-              if ( u == numero_al)        		 {	 
-        			 eleccion[u]=1;	 break;
-        		 }
-        	 }//for              
-              
-              
-              for(int uu = 0 ; uu < eleccion.length; uu++){                 
-            	  eleccion[uu] = eleccion[uu] * M[uu] ;                  
-               }//for    
-              
+        	 if( M[numero_al] != 0)	{ decision = numero_al; break; }
+        	
     	  }//while
     	 
     	 int[] marca = new int[ RdP.getCantidadPlaza() ];
      	 
-    	 if( eleccion[posicionTransicionBuffer2]==1 || eleccion[posicionTransicionBuffer1]==1 )
+    	 if( (decision ==4) || (decision ==14))
     	 {
     		 if (  marca [posicionPlazaBuffer2] < marca [posicionPlazaBuffer1] ) {
     			 decision = posicionTransicionBuffer2;
@@ -95,8 +86,7 @@ public class Politicas {
     	return decision;
     	
     }//cual
-    
-    
+
 }//class
 
     	/*int eleccion = sensibilizadas.get(0);
