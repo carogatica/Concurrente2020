@@ -203,16 +203,18 @@ public class Monitor {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                RdP.disparar(transicion); //llamada recursiva, en la mas interna deberia de entrar en el primer if y disparar la transicion
+                if(RdP.disparar(transicion))
+                {}; //llamada recursiva, en la mas interna deberia de entrar en el primer if y disparar la transicion
             }
-            else throw new IllegalDisparoException("llego despues no se va a disparar nunca");
+            else throw new IllegalDisparoException(transicion + " llego despues no se va a disparar nunca");
             //else{
             //mutex.release(); // devuelve mutex
             //actualizarCondiciones(transicion);
             //return;
         //}
-        mutex.release(); // devuelve mutex
-        actualizarCondiciones(transicion);
+        //mutex.release(); // devuelve mutex
+        //actualizarCondiciones(transicion);
+        //return;
         }
     
     private void imprimir_vector( int[] v, String nombre)

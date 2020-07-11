@@ -15,6 +15,7 @@
  */
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Politicas {
@@ -60,17 +61,33 @@ public class Politicas {
             ceros[u] = 0;
          }//for
     	*/ 
-    	 int numero_al;
+         int numero_al;
+         boolean chau = true;
     	 
-    	 while (true)
+    	 while (chau)
     	 {
+
     		 numero_al = randomno.nextInt( RdP.getCantidadTransiciones() );    		 
     			
-        	 if( M[numero_al] != 0)	{ decision = numero_al; break; }
+             if( M[numero_al] != 0)	
+             { 
+                 decision = numero_al; 
+                //break; 
+            }
+             for(int i = 0; i<M.length; i++){
+                 Integer key = Integer.valueOf(i);
+                 if(prioridades.get(key) > prioridades.get(Integer.valueOf(decision)))
+                 {
+                     decision = i;
+                     chau = false;
+                 }
+             }
+
         	
-    	  }//while
+          }//while
+          
     	 
-    	 int[] marca = new int[ RdP.getCantidadPlaza() ];
+  /*      int[] marca = new int[ RdP.getCantidadPlaza() ];
      	 
     	 if( (decision ==4) || (decision ==14))
     	 {
@@ -81,11 +98,12 @@ public class Politicas {
     			 decision = posicionTransicionBuffer1;
     		 }    		 
     	 }
-    	 
+    	 */
     	 
     	return decision;
     	
     }//cual
+    
 
 }//class
 
